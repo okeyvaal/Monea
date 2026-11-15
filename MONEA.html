@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#F5F6F6">
+  <meta name="description" content="MONEA: aprende sobre finanzas, registra tus ingresos y gastos y reconoce riesgos financieros.">
+  <title>MONEA — Entiende tu dinero, decide mejor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+  :root{
+    --mint:#4CAB94; --bg:#F5F6F6; --white:#fff; --text:#4F4F4F;
+    --icon:#737373; --ink:#111; --dark:#216B59; --deep:#1D594B;
+    --pale:#E5F3EE; --border:#DDE3E1; --on-mint:#3C3C3C;
+    --display:"Fredoka","Trebuchet MS",system-ui,sans-serif;
+    --body:"Nunito Sans","Segoe UI",Arial,sans-serif;
+    --radius:34px;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:100px}
+  body{margin:0;min-width:320px;background:var(--bg);color:var(--text);font:400 16px/1.65 var(--body)}
+  [hidden]{display:none!important}
+  button,input,select{font:inherit}
+  button{cursor:pointer}
+  a{color:var(--dark)}
+  :focus-visible{outline:3px solid var(--deep)!important;outline-offset:3px}
+  ::selection{background:#c5e9dc;color:#173b32}
+  .skip-link{position:absolute;top:-100px;left:12px;z-index:300;background:#fff;padding:12px 18px;border-radius:12px}
+  .skip-link:focus{top:12px}
+  .container{max-width:1200px;margin-inline:auto;padding-inline:clamp(20px,4vw,48px)}
+  .site-header{position:sticky;top:0;z-index:90;background:rgba(245,246,246,.97);border-bottom:1px solid rgba(221,227,225,.76)}
+  .header-inner{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+  .logo{display:inline-flex;align-items:center;gap:4px;text-decoration:none;white-space:nowrap;font:700 32px/1 var(--display);color:var(--mint);letter-spacing:.005em}
+  .logo svg{width:30px;height:30px;flex:none}
+  .site-nav{display:flex;align-items:center;gap:clamp(13px,2.4vw,30px)}
+  .site-nav a:not(.btn){text-decoration:none;color:#3c4d47;font-weight:800;font-size:14px;padding:8px 0;position:relative}
+  .site-nav a[aria-current="page"]:after{content:"";height:3px;border-radius:9px;background:var(--dark);position:absolute;left:0;right:0;bottom:2px}
+  .site-nav a:not(.btn):hover{color:var(--dark)}
+  .btn{display:inline-flex;justify-content:center;align-items:center;gap:9px;border:1px solid transparent;border-radius:999px;min-height:48px;padding:11px 23px;line-height:1.3;font-weight:800;text-decoration:none;transition:background .18s ease,transform .18s ease,color .18s ease;white-space:normal;text-align:center}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:var(--dark);color:white}
+  .btn-primary:hover{background:var(--deep);color:white}
+  .btn-soft{background:var(--pale);color:var(--dark)}
+  .btn-soft:hover{background:#d4e9e1}
+  .btn-outline{background:transparent;border-color:var(--border);color:var(--dark)}
+  .btn-outline:hover{background:var(--pale)}
+  .btn-small{min-height:44px;padding:9px 16px;font-size:14px}
+  .btn-danger{color:#933c2f;background:#fff;border:1px solid #cfa9a2}
+  .btn-danger:hover{background:#fff0ee}
+  .menu-toggle{display:none;align-items:center;gap:8px;border:1px solid var(--border);background:#fff;color:var(--dark);font-weight:800;border-radius:15px;min-height:44px;padding:7px 12px}
+  h1,h2,h3,h4{font-family:var(--display);font-weight:600;line-height:1.14;margin:0 0 18px;color:var(--dark)}
+  h1{font-size:clamp(38px,5.5vw,66px)}h2{font-size:clamp(29px,3.7vw,44px)}h3{font-size:clamp(21px,2.4vw,29px)}h4{font-size:21px}
+  p{margin:0 0 16px}p:last-child{margin-bottom:0}
+  .eyebrow{display:inline-block;color:var(--deep);font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;margin-bottom:18px}
+  .lead{font-size:clamp(18px,2vw,21px);max-width:65ch;line-height:1.6}
+  .muted{color:#606867}.small{font-size:14px}.minitext{font-size:13px}
+  .section{padding-block:clamp(52px,7vw,90px)}
+  .section-narrow{padding-block:38px 50px}
+  .section-title{margin-bottom:12px}
+  .section-copy{max-width:680px;margin-bottom:35px}
+  .hero{padding-block:clamp(65px,8vw,115px) clamp(72px,8vw,115px)}
+  .hero-inner{display:grid;grid-template-columns:1.08fr .92fr;align-items:center;gap:clamp(30px,6vw,85px)}
+  .hero h1{max-width:720px}.hero .lead{max-width:555px;margin-bottom:30px}
+  .hero-art{min-height:360px;display:flex;align-items:center;justify-content:center;position:relative}
+  .hero-art svg{width:min(100%,475px);max-height:420px;color:var(--icon)}
+  .hero-art:before{content:"";width:83%;aspect-ratio:1;position:absolute;border-radius:50%;background:#e8f2ed;opacity:.6;z-index:-1}
+  .pills{display:flex;gap:10px;flex-wrap:wrap;margin-top:32px}
+  .pill{border:1px solid #d3e2da;background:#fff;color:#376154;border-radius:99px;padding:7px 14px;font-size:13px;font-weight:800}
+  .three-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+  .module-card{background:var(--mint);padding:18px 15px 15px;border-radius:36px;display:flex;flex-direction:column}
+  .module-title{color:var(--on-mint);font-family:var(--display);font-weight:600;font-size:clamp(20px,2.15vw,26px);text-align:center;min-height:62px;display:flex;align-items:center;justify-content:center;margin:3px 10px 12px}
+  .module-inner{background:var(--bg);border-radius:27px;padding:25px 22px;display:flex;flex:1;flex-direction:column;align-items:flex-start;gap:10px}
+  .module-inner p{flex:1}
+  .outline-illustration{width:92px;height:88px;color:var(--icon);display:block;margin:4px auto 14px}
+  .outline-illustration *{vector-effect:non-scaling-stroke}
+  .module-inner .btn{margin-top:8px}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;counter-reset:count}
+  .step{padding:22px 24px;border:1px solid var(--border);background:white;border-radius:26px}
+  .step-num{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--pale);color:var(--dark);font:700 21px var(--display);margin-bottom:19px}
+  .step h3{font-size:22px;margin-bottom:8px}
+  .closing{border-radius:36px;padding:clamp(28px,4vw,54px);background:var(--pale);display:flex;gap:25px;align-items:center;justify-content:space-between}
+  .closing p{max-width:620px}.closing h2{margin-bottom:12px}
+  .page-intro{padding-block:clamp(44px,6vw,76px) 38px}
+  .page-intro h1{margin-bottom:15px}
+  .page-intro .lead{max-width:720px}
+  .panel{border-radius:28px;background:#fff;border:1px solid var(--border);padding:clamp(20px,3vw,30px)}
+  .panel + .panel{margin-top:20px}
+  .panel h2{font-size:29px}.panel h3{font-size:24px}
+  .panel-heading{display:flex;justify-content:space-between;align-items:start;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+  .panel-heading h2,.panel-heading h3{margin-bottom:4px}
+  .workspace{display:grid;grid-template-columns:minmax(0,1.23fr) minmax(285px,.77fr);gap:22px;align-items:start}
+  .workspace-column{min-width:0}
+  .periodbar{display:flex;align-items:end;justify-content:space-between;gap:22px;flex-wrap:wrap}
+  .period-controls{display:flex;gap:8px;align-items:center}
+  .period-label{font-weight:800;min-width:210px;text-align:center}
+  .icon-button{width:45px;height:45px;border:1px solid var(--border);background:white;border-radius:15px;color:var(--dark);font-size:23px;line-height:1;display:grid;place-items:center}
+  .icon-button:hover{background:var(--pale)}
+  .field{display:flex;flex-direction:column;gap:7px;min-width:0}
+  .field label{font-size:14px;font-weight:800;color:#354a43}
+  .field input,.field select{display:block;width:100%;min-width:0;border:1px solid #bccbc5;border-radius:15px;background:white;color:#353e3b;min-height:49px;padding:10px 14px}
+  .field input::placeholder{color:#798681}
+  .field:focus-within label{color:var(--deep)}
+  .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .form-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+  .form-error{color:#942f26;font-weight:700;font-size:14px;margin-top:10px}
+  .money-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:20px;margin-bottom:22px}
+  .money-stat{background:white;border:1px solid var(--border);border-radius:24px;padding:19px 17px;min-width:0}
+  .money-stat .caption-stat{font-size:13px;font-weight:800;color:#4b6258;margin-bottom:8px}
+  .money-stat strong{display:block;font-size:clamp(21px,2vw,29px);font-variant-numeric:tabular-nums;line-height:1.25;overflow-wrap:anywhere;color:#303f39}
+  .money-stat.available{background:var(--pale);border-color:#c6e2d7}
+  .money-stat.available strong{color:var(--dark)}
+  .info-banner{background:var(--pale);border:1px solid #cfe5db;border-radius:20px;padding:16px 18px;color:#31594c;margin-bottom:22px}
+  .info-banner p{margin:0}
+  .breakdown-row{margin:19px 0}
+  .breakdown-meta{display:flex;justify-content:space-between;gap:14px;align-items:baseline;font-weight:800;font-size:14px}
+  .breakdown-meta strong{font-variant-numeric:tabular-nums;white-space:nowrap}
+  .track{height:11px;background:#e8eeeb;border-radius:99px;overflow:hidden;margin-top:9px}
+  .fill{height:100%;background:var(--mint);border-radius:99px;transition:width .2s}
+  .fill.fixed{background:#427b6e}.fill.variable{background:#85b8a6}.fill.debt{background:#667f74}
+  .savings-form{margin-top:10px}
+  .savings-display{font:600 clamp(25px,3vw,37px)/1.2 var(--display);color:var(--dark);margin:16px 0}
+  .savings-form .field{max-width:270px}
+  .record-list{list-style:none;margin:0;padding:0}
+  .record{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 0;border-bottom:1px solid var(--border)}
+  .record:last-child{border-bottom:0}
+  .record-info{min-width:0}
+  .record-title{font-weight:800;overflow-wrap:anywhere}
+  .record-meta{font-size:13px;color:#596962}
+  .record-right{display:flex;align-items:center;justify-content:flex-end;gap:9px;flex-wrap:wrap}
+  .record-amount{font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap;color:#343e3a}
+  .record-amount.income{color:var(--dark)}
+  .text-btn{border:0;background:transparent;color:var(--dark);text-decoration:underline;padding:9px 5px;font-size:14px;font-weight:800;min-height:44px}
+  .text-btn.delete{color:#953d31}
+  .empty-state{padding:25px 12px;text-align:center;color:#606867}
+  .empty-state svg{height:65px;width:65px;margin-bottom:12px;color:var(--icon)}
+  details{border:1px solid var(--border);border-radius:20px;background:#fff;padding:15px 19px;margin-top:16px}
+  summary{cursor:pointer;font-weight:800;color:#31594c;min-height:29px}
+  details[open] summary{margin-bottom:13px}
+  .tools{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+  .tools input[type=file]{display:none}
+  .data-note{font-size:13px;margin-top:12px}
+  .lesson-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+  .lesson-card{display:flex;flex-direction:column;align-items:flex-start;text-align:left;width:100%;background:#fff;border:1px solid var(--border);border-radius:27px;padding:22px;min-height:235px;color:var(--text);transition:border .2s,transform .2s}
+  .lesson-card:hover{border-color:#71b19c;transform:translateY(-2px)}
+  .lesson-card:focus-visible{outline-offset:4px}
+  .lesson-icon{height:48px;width:48px;border:1px solid #bcd6ca;background:var(--pale);border-radius:17px;display:grid;place-items:center;color:var(--dark);font:600 23px var(--display);margin-bottom:17px}
+  .lesson-card strong{font:600 23px/1.2 var(--display);color:var(--dark);margin-bottom:10px}
+  .lesson-card span.desc{font-size:14px;line-height:1.5;flex:1}
+  .lesson-card .lesson-action{font-size:14px;font-weight:800;color:var(--dark);margin-top:15px;text-decoration:underline}
+  .lesson-detail{margin-top:24px;background:var(--pale);border-radius:28px;padding:clamp(24px,4vw,42px);border:1px solid #cce7dd}
+  .lesson-detail h2{margin:0 0 18px}
+  .lesson-detail p{max-width:76ch}
+  .lesson-example{background:#fff;border-radius:19px;padding:18px 22px;margin:20px 0}
+  .lesson-example strong{color:var(--deep)}
+  .lesson-pagination{display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between;margin-top:24px}
+  .risk-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+  .risk-card{background:white;border:1px solid var(--border);border-radius:28px;padding:25px}
+  .risk-card h3{font-size:26px;margin-bottom:10px}
+  .risk-icon{height:55px;width:55px;border-radius:18px;background:var(--pale);display:grid;place-items:center;color:var(--dark);margin-bottom:18px}
+  .risk-card ul{padding-left:21px;margin:14px 0}.risk-card li{padding:3px 0}
+  .checklist{margin-top:24px}
+  .check-row{display:flex;gap:12px;align-items:start;padding:12px 0;border-bottom:1px solid var(--border)}
+  .check-row:last-child{border-bottom:0}.check-row input{flex:none;width:20px;height:20px;margin-top:3px;accent-color:var(--dark)}
+  .check-progress{font-weight:800;color:var(--dark);margin-top:16px}
+  .site-footer{margin-top:60px;border-top:1px solid var(--border);background:#eff3f1;padding:35px 0}
+  .footer-inner{display:flex;justify-content:space-between;gap:24px;align-items:center;flex-wrap:wrap}
+  .footer-copy{font-size:13px;max-width:550px;margin-top:10px}
+  .footer-nav{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;font-weight:800}
+  .footer-nav a{text-decoration:none}
+  .footer-nav a:hover{text-decoration:underline}
+  #notice{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);z-index:120;width:min(570px,calc(100% - 32px));background:#244e40;color:#fff;box-shadow:0 12px 35px #173c2c30;padding:16px 20px;border-radius:18px;font-weight:700;text-align:center}
+  #notice.error{background:#833b30}
+  .sr-only{position:absolute;width:1px;height:1px;white-space:nowrap;overflow:hidden;clip:rect(0,0,0,0)}
+  @media(max-width:1000px){.three-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.module-card:last-child{grid-column:1/-1;max-width:560px}.lesson-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.workspace{grid-template-columns:1fr}.hero-inner{gap:12px}.hero-art{min-height:290px}}
+  @media(max-width:760px){
+    .header-inner{min-height:68px;flex-wrap:wrap}.logo{font-size:28px}.logo svg{width:26px;height:26px}
+    .menu-toggle{display:flex}
+    .site-nav{display:none;width:100%;padding-bottom:15px;flex-direction:column;align-items:stretch;gap:0}
+    .site-nav.open{display:flex}
+    .site-nav a:not(.btn){padding:12px 4px}.site-nav a[aria-current="page"]:after{left:0;right:auto;width:44px;bottom:5px}
+    .site-nav .btn{margin-top:8px}
+    .hero-inner{grid-template-columns:1fr}.hero{padding-block:54px 62px}
+    .hero-art{min-height:240px}.hero-art svg{max-height:270px;width:80%}
+    .three-grid,.steps,.risk-grid{grid-template-columns:1fr}.module-card:last-child{grid-column:auto;max-width:none}
+    .module-title{min-height:unset}
+    .closing{align-items:flex-start;flex-direction:column}
+    .money-stats{grid-template-columns:1fr}
+  }
+  @media(max-width:480px){
+    .container{padding-inline:20px}.form-grid,.lesson-grid{grid-template-columns:1fr}
+    .periodbar{display:block}.period-controls{margin-top:16px}.period-label{min-width:0;flex:1;font-size:14px}
+    .record{align-items:flex-start;flex-direction:column}.record-right{width:100%;justify-content:space-between}
+    .lesson-card{min-height:175px}
+    .module-card{border-radius:27px;padding:15px 12px 12px}.module-inner{border-radius:22px;padding:22px}
+  }
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+  @media print{.site-header,.site-footer,.btn,.tools,.text-btn,.menu-toggle{display:none!important}body{background:#fff}main .route[hidden]{display:none!important}.panel,.money-stat{break-inside:avoid}}
+  </style>
+</head>
+<body>
+<a class="skip-link" href="#main">Saltar al contenido</a>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="#inicio" aria-label="MONEA, ir a inicio">
+      <svg viewBox="0 0 40 40" aria-hidden="true" fill="none"><circle cx="20" cy="20" r="17" stroke="#4F4F4F" stroke-width="2.3"/><circle cx="20" cy="20" r="13" stroke="#737373" stroke-width="1.6"/><path d="M24 12c-2-2-9-2-10 2-2 5 3 5 6 6 6 2 7 6 3 8-3 2-8 1-10-1M20 9v23" stroke="#737373" stroke-linecap="round" stroke-width="2.6"/></svg>
+      MONEA
+    </a>
+    <button id="menuButton" class="menu-toggle" type="button" aria-controls="siteNav" aria-expanded="false"><span aria-hidden="true">☰</span> Menú</button>
+    <nav id="siteNav" class="site-nav" aria-label="Navegación principal">
+      <a href="#inicio" data-nav="inicio">Inicio</a>
+      <a href="#mi-dinero" data-nav="mi-dinero">Mi dinero</a>
+      <a href="#aprende" data-nav="aprende">Aprende</a>
+      <a href="#protege" data-nav="protege">Protege tu dinero</a>
+      <a href="#mi-dinero" class="btn btn-primary">Empezar</a>
+    </nav>
+  </div>
+</header>
+<main id="main" tabindex="-1">
+  <div class="route" id="page-inicio" data-route="inicio">
+    <section class="hero">
+      <div class="container hero-inner">
+        <div>
+          <span class="eyebrow">Educación financiera clara y a tu ritmo</span>
+          <h1>Entiende tu dinero, decide mejor.</h1>
+          <p class="lead">Organiza tus ingresos y gastos, conoce lo que tienes disponible y aprende a cuidar tu dinero. Sin tecnicismos ni juicios.</p>
+          <a class="btn btn-primary" href="#mi-dinero">Empezar ahora <span aria-hidden="true">→</span></a>
+          <div class="pills" aria-label="Características"><span class="pill">Gratuita</span><span class="pill">Sin crear una cuenta</span><span class="pill">Tus datos se quedan en este dispositivo</span></div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <svg viewBox="0 0 460 410" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#737373" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M180 107c-6-20-24-43-22-53 5-11 35 8 58 4 22-4 50-16 58-5 4 9-12 35-18 55" stroke-width="7"/>
+            <path d="M178 107c37 10 64 10 83 0M180 113c-68 58-97 113-94 183 2 38 25 60 71 60h125c43 0 68-27 68-61-1-72-30-131-94-181" stroke-width="7"/>
+            <path d="M244 187c-11-11-40-14-56 0-17 17-4 34 22 42 27 8 42 24 25 43-14 15-41 15-55 3M215 166v130" stroke-width="9"/>
+            <circle cx="349" cy="104" r="50" stroke-width="6"/><circle cx="349" cy="104" r="38" stroke-width="3.5"/>
+            <path d="M360 88c-8-9-27-7-29 4-4 14 28 9 28 23-1 13-23 17-34 7M343 78v52" stroke-width="4"/>
+            <circle cx="91" cy="150" r="31" stroke-width="5"/><circle cx="91" cy="150" r="23" stroke-width="3"/><path d="M98 141c-5-6-16-3-17 4-2 8 17 6 17 14-1 9-12 10-19 6M91 134v32" stroke-width="3"/>
+            <path d="M367 269h48v96h-48zM387 235h28v34h-28M362 365h57M386 256l9-14M374 267h35" stroke-width="5"/>
+            <path d="M49 303h33v62H49zM49 365h34M64 287v16M25 365h72" stroke-width="5"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+    <section class="section" aria-labelledby="modulos-titulo">
+      <div class="container">
+        <h2 class="section-title" id="modulos-titulo">Un espacio para aprender y organizarte</h2>
+        <p class="section-copy lead">Comienza por lo que necesitas. Puedes usar cada módulo por separado.</p>
+        <div class="three-grid">
+          <article class="module-card">
+            <h3 class="module-title">MÓDULO 1: MI DINERO</h3>
+            <div class="module-inner">
+              <svg class="outline-illustration" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="24" y="12" width="54" height="78" rx="8"/><path d="M34 30h34M34 44h14M34 58h14M34 72h16"/><circle cx="69" cy="72" r="19" fill="#F5F6F6"/><path d="M75 65c-4-4-11-3-12 2-2 6 13 6 11 12-1 4-10 5-13 1M69 61v22"/></svg>
+              <p>Registra cuánto dinero entra, cuánto sale y cuánto queda disponible en el periodo que elijas.</p>
+              <a class="btn btn-soft" href="#mi-dinero">Organizar mi dinero <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+          <article class="module-card">
+            <h3 class="module-title">MÓDULO 2: CONOCE SOBRE LAS FINANZAS</h3>
+            <div class="module-inner">
+              <svg class="outline-illustration" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="14" y="8" width="61" height="81" rx="8"/><path d="M26 24h37M27 40h6M44 40h6M61 40h4M27 54h6M44 54h6M61 54h4M27 68h6M44 68h6"/><circle cx="75" cy="74" r="18" fill="#F5F6F6"/><path d="M79 67c-3-3-9-2-10 2-1 5 11 5 11 9-1 5-9 5-12 1M75 63v22"/></svg>
+              <p>Aprende con lecciones breves sobre ahorro, créditos, inflación, tarjetas y más.</p>
+              <a class="btn btn-soft" href="#aprende">Ver lecciones <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+          <article class="module-card">
+            <h3 class="module-title">MÓDULO 3: PROTEGE TU DINERO</h3>
+            <div class="module-inner">
+              <svg class="outline-illustration" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M50 10c14 12 28 14 37 15v26c0 22-14 34-37 43C27 85 13 73 13 51V25c10-1 25-4 37-15z"/><path d="m31 50 12 12 26-27" stroke-width="6"/></svg>
+              <p>Reconoce señales de fraudes, préstamos abusivos y ofertas que podrían ser engañosas.</p>
+              <a class="btn btn-soft" href="#protege">Conocer las señales <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section class="section" aria-labelledby="como-titulo">
+      <div class="container"><h2 class="section-title" id="como-titulo">¿Cómo funciona?</h2><p class="section-copy lead">Tres pasos para tener una idea más clara de tus finanzas.</p>
+        <div class="steps"><article class="step"><div class="step-num">1</div><h3>Registra tus movimientos</h3><p>Anota ingresos, gastos fijos, variables y pagos de deudas. También puedes registrar cantidades pequeñas.</p></article><article class="step"><div class="step-num">2</div><h3>Consulta tu resumen</h3><p>Revisa lo que entró, lo que salió y cuánto queda en la semana, quincena o mes.</p></article><article class="step"><div class="step-num">3</div><h3>Adapta tu plan</h3><p>Explora una meta de ahorro que tenga sentido después de cubrir tus necesidades.</p></article></div>
+      </div>
+    </section>
+    <section class="section-narrow"><div class="container"><div class="closing"><div><h2>Tu economía, tus decisiones.</h2><p>El registro funciona con ingresos variables, ventas diarias, trabajo informal y presupuestos pequeños. Puedes empezar con lo que tengas.</p></div><a class="btn btn-primary" href="#mi-dinero">Ir a Mi dinero</a></div></div></section>
+  </div>
+
+  <div class="route" id="page-mi-dinero" data-route="mi-dinero" hidden>
+    <section class="page-intro"><div class="container"><span class="eyebrow">Módulo 1 · Mi dinero</span><h1>Organiza tu dinero</h1><p class="lead">Anota tus movimientos y revisa tu resumen. Los montos se muestran en pesos mexicanos (MXN).</p></div></section>
+    <div class="container">
+      <div class="panel" aria-label="Seleccionar periodo"><div class="periodbar"><div class="field" style="min-width:205px"><label for="periodType">Frecuencia de pago y resumen</label><select id="periodType"><option value="weekly">Semanal</option><option value="fortnight">Quincenal</option><option value="monthly" selected>Mensual</option></select><span class="minitext muted">Si recibes ingresos variables, elige cómo prefieres agrupar las fechas.</span></div><div><span class="small muted" style="display:block;margin-bottom:7px">Moverse entre periodos</span><div class="period-controls"><button id="periodPrev" class="icon-button" type="button" aria-label="Periodo anterior">‹</button><strong class="period-label" id="periodLabel">Periodo actual</strong><button id="periodNext" class="icon-button" type="button" aria-label="Periodo siguiente">›</button></div></div><button id="periodToday" type="button" class="btn btn-outline btn-small">Ir a hoy</button></div></div>
+      <div class="money-stats" aria-live="polite" aria-atomic="true">
+        <div class="money-stat"><div class="caption-stat">Dinero que entra</div><strong id="totalIncome">$0.00</strong><span class="small muted">Ingresos registrados</span></div>
+        <div class="money-stat"><div class="caption-stat">Dinero que sale</div><strong id="totalExpense">$0.00</strong><span class="small muted">Gastos y pagos de deudas</span></div>
+        <div class="money-stat available"><div class="caption-stat">Dinero disponible</div><strong id="totalAvailable">$0.00</strong><span class="small muted">Ingresos menos salidas</span></div>
+      </div>
+      <div class="workspace">
+        <div class="workspace-column">
+          <section class="panel" aria-labelledby="add-title"><div class="panel-heading"><div><h2 id="add-title">Registrar movimiento</h2><p>Completa los datos para agregar un ingreso o una salida.</p></div></div>
+            <form id="movementForm" novalidate><div class="form-grid">
+                <div class="field"><label for="movementType">Tipo de movimiento</label><select id="movementType" required><option value="income">Ingreso</option><option value="fixed">Gasto fijo</option><option value="variable">Gasto variable</option><option value="debt">Pago de deuda</option></select></div>
+                <div class="field"><label for="movementAmount">Cantidad en pesos (MXN)</label><input id="movementAmount" type="text" inputmode="decimal" placeholder="Ej. 250.50" autocomplete="off" maxlength="16" required></div>
+                <div class="field"><label for="movementDate">Fecha</label><input id="movementDate" type="date" required></div>
+                <div class="field"><label for="movementDescription">Concepto (opcional)</label><input id="movementDescription" type="text" maxlength="90" placeholder="Ej. Venta del día"></div>
+              </div><p id="formError" role="alert" class="form-error" hidden></p><div class="form-actions"><button id="submitMovement" class="btn btn-primary" type="submit">Guardar movimiento</button><button id="cancelEdit" class="btn btn-outline" type="button" hidden>Cancelar edición</button></div></form>
+          </section>
+          <section class="panel" aria-labelledby="records-title"><div class="panel-heading"><div><h2 id="records-title">Movimientos del periodo</h2><p id="recordsCount" class="small muted">0 movimientos</p></div></div><div id="recordsEmpty" class="empty-state"><svg aria-hidden="true" viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><rect x="19" y="7" width="43" height="64" rx="7"/><path d="M29 25h22M29 36h22M29 47h15"/><circle cx="57" cy="57" r="13" fill="#fff"/><path d="m53 57 3 3 7-8"/></svg><p>Todavía no hay movimientos en este periodo.<br>Registra el primero para ver tu resumen.</p></div><ul id="recordList" class="record-list" aria-label="Lista de movimientos"></ul></section>
+        </div>
+        <div class="workspace-column">
+          <section class="panel" aria-labelledby="breakdown-title"><h2 id="breakdown-title">¿En qué salió tu dinero?</h2><p class="small muted">Distribución de tus salidas registradas durante el periodo.</p>
+            <div class="breakdown-row"><div class="breakdown-meta"><span>Gastos fijos</span><strong id="sumFixed">$0.00</strong></div><div class="track" role="img" id="trackFixed" aria-label="Gastos fijos, sin datos"><div id="barFixed" class="fill fixed" style="width:0%"></div></div></div>
+            <div class="breakdown-row"><div class="breakdown-meta"><span>Gastos variables</span><strong id="sumVariable">$0.00</strong></div><div class="track" role="img" id="trackVariable" aria-label="Gastos variables, sin datos"><div id="barVariable" class="fill variable" style="width:0%"></div></div></div>
+            <div class="breakdown-row"><div class="breakdown-meta"><span>Pagos de deudas</span><strong id="sumDebt">$0.00</strong></div><div class="track" role="img" id="trackDebt" aria-label="Pagos de deudas, sin datos"><div id="barDebt" class="fill debt" style="width:0%"></div></div></div>
+            <p class="small muted" id="breakdownHint">Las barras se actualizarán al registrar salidas.</p>
+          </section>
+          <section class="panel" aria-labelledby="saving-title"><h2 id="saving-title">Ahorra a tu ritmo</h2><p>Después de cubrir lo necesario, puedes elegir una cantidad que te resulte posible. No hay un porcentaje obligatorio.</p>
+            <div class="info-banner" id="savingAdvice" aria-live="polite">Agrega tus ingresos y salidas para explorar una cantidad posible.</div>
+            <form id="savingsForm" class="savings-form"><div class="field"><label for="savingsAmount">Meta de ahorro para este periodo (MXN)</label><input id="savingsAmount" type="text" inputmode="decimal" maxlength="16" placeholder="Ej. 50.00"></div><div class="form-actions"><button type="submit" class="btn btn-soft btn-small">Guardar meta</button></div><p id="savingsError" class="form-error" role="alert" hidden></p></form>
+            <div class="savings-display" id="savingResult">$0.00</div><p id="remainingResult" class="small muted">Disponible después de la meta: $0.00</p>
+          </section>
+          <section class="panel" aria-labelledby="privacy-title"><h2 id="privacy-title">Tus registros</h2><p class="small">Este archivo guarda los datos únicamente en el almacenamiento de este navegador y dispositivo. No necesita cuenta ni envía información a un servidor.</p><p class="small"><strong>Importante:</strong> los datos no están cifrados. Evita usarlo en equipos compartidos para información sensible.</p>
+            <details><summary>Descargar, respaldar o borrar datos</summary><p class="small">Guarda una copia de seguridad en JSON para recuperar tus registros en otro navegador. El CSV contiene los movimientos del periodo visible.</p>
+              <div class="tools"><button id="exportJson" class="btn btn-soft btn-small" type="button">Respaldo JSON</button><button id="exportCsv" class="btn btn-soft btn-small" type="button">Descargar CSV</button><button id="importButton" class="btn btn-outline btn-small" type="button">Importar respaldo</button><input id="importFile" type="file" accept=".json,application/json"><button id="clearData" class="btn btn-danger btn-small" type="button">Borrar todos mis datos</button></div>
+              <p class="data-note">Al importar un respaldo se reemplazan los registros guardados en este navegador.</p>
+            </details>
+          </section>
+        </div>
+      </div>
+      <p class="small muted" style="margin-top:25px">MONEA ofrece información educativa y cálculos basados en los montos que registres; no sustituye una asesoría financiera personalizada.</p>
+    </div>
+  </div>
+
+  <div class="route" id="page-aprende" data-route="aprende" hidden>
+    <section class="page-intro"><div class="container"><span class="eyebrow">Módulo 2 · Conoce sobre las finanzas</span><h1>Aprende sobre tu dinero</h1><p class="lead">Ocho lecciones cortas, con palabras sencillas y ejemplos cotidianos. Elige la que más te interese.</p></div></section>
+    <section class="section-narrow"><div class="container"><div id="lessonGrid" class="lesson-grid" aria-label="Temas disponibles"></div><article id="lessonDetail" class="lesson-detail" hidden tabindex="-1" aria-labelledby="lessonTitle"><span id="lessonCounter" class="eyebrow"></span><h2 id="lessonTitle"></h2><div id="lessonBody"></div><div class="lesson-pagination"><button id="lessonPrev" class="btn btn-outline" type="button">← Lección anterior</button><button id="lessonNext" class="btn btn-primary" type="button">Lección siguiente →</button></div></article></div></section>
+  </div>
+
+  <div class="route" id="page-protege" data-route="protege" hidden>
+    <section class="page-intro"><div class="container"><span class="eyebrow">Módulo 3 · Protege tu dinero</span><h1>Aprende a reconocer riesgos</h1><p class="lead">Antes de entregar tus datos, pagar un anticipo o aceptar un crédito, revisa las señales de alerta.</p></div></section>
+    <section class="section-narrow"><div class="container">
+      <div class="risk-grid">
+        <article class="risk-card"><div class="risk-icon" aria-hidden="true"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3 29 27H3L16 3z"/><path d="M16 12v7M16 23h.01"/></svg></div><h3>Fraudes y mensajes falsos</h3><p>Una llamada o un mensaje puede hacerse pasar por una institución conocida.</p><ul><li>Te piden contraseñas, códigos de verificación o datos bancarios.</li><li>Presionan para que respondas de inmediato.</li><li>El enlace se parece al oficial, pero tiene letras o direcciones diferentes.</li></ul><p><strong>Qué hacer:</strong> entra por la página o aplicación oficial que tú conozcas. No uses el enlace que te enviaron.</p></article>
+        <article class="risk-card"><div class="risk-icon" aria-hidden="true"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="5" y="4" width="22" height="24" rx="4"/><path d="M10 11h12M10 17h12M10 22h6"/></svg></div><h3>Préstamos abusivos</h3><p>Un crédito puede resultar costoso si no conoces lo que tendrás que devolver.</p><ul><li>No explican el costo total, los intereses o las fechas de pago.</li><li>Exigen un anticipo para supuestamente liberar el préstamo.</li><li>Piden acceso a tus contactos, fotografías o archivos sin una razón clara.</li></ul><p><strong>Qué hacer:</strong> lee las condiciones completas, verifica quién ofrece el crédito y compara alternativas antes de aceptar.</p></article>
+        <article class="risk-card"><div class="risk-icon" aria-hidden="true"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="16" cy="11" r="5"/><path d="M6 27c0-6 4-10 10-10s10 4 10 10M3 9V4h6M23 4h6v5"/></svg></div><h3>Suplantación de identidad</h3><p>Alguien puede utilizar datos ajenos para intentar hacerse pasar por otra persona.</p><ul><li>Solicitan una foto de tu identificación por un chat inesperado.</li><li>Te piden códigos que recibiste por SMS o correo.</li><li>Notas movimientos o solicitudes que no reconoces.</li></ul><p><strong>Qué hacer:</strong> no compartas códigos de acceso, activa las medidas de seguridad disponibles y contacta al proveedor por medios oficiales.</p></article>
+        <article class="risk-card"><div class="risk-icon" aria-hidden="true"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="16" cy="16" r="12"/><path d="M21 11c-4-4-10-2-10 2-1 6 10 4 10 9-1 5-8 6-11 2M16 6v20"/></svg></div><h3>Ofertas financieras engañosas</h3><p>Las promesas de ganancias seguras y rápidas merecen una revisión cuidadosa.</p><ul><li>Garantizan grandes ganancias sin explicar los riesgos.</li><li>No queda claro quién administra el dinero.</li><li>Prometen premios o beneficios solo si depositas de inmediato.</li></ul><p><strong>Qué hacer:</strong> comprueba la identidad de la empresa y las condiciones por canales independientes antes de pagar.</p></article>
+      </div>
+      <section class="panel checklist" aria-labelledby="check-title"><h2 id="check-title">Antes de aceptar una oferta</h2><p>Marca lo que ya revisaste. Esta lista sirve como recordatorio, no garantiza que una oferta sea segura.</p>
+        <div id="checkList"><label class="check-row"><input type="checkbox" class="safety-check"><span>Sé quién ofrece el producto o servicio y cómo contactarlo por medios oficiales.</span></label><label class="check-row"><input type="checkbox" class="safety-check"><span>Entiendo cuánto pagaré en total, cuándo debo pagar y qué ocurre si me atraso.</span></label><label class="check-row"><input type="checkbox" class="safety-check"><span>Leí las condiciones y sé qué datos personales me solicitan y para qué.</span></label><label class="check-row"><input type="checkbox" class="safety-check"><span>No he compartido contraseñas, NIP ni códigos de verificación.</span></label><label class="check-row"><input type="checkbox" class="safety-check"><span>Tuve tiempo para comparar y decidir sin presiones.</span></label></div>
+        <p id="checkProgress" class="check-progress" aria-live="polite">0 de 5 puntos revisados.</p>
+        <button id="resetChecks" type="button" class="btn btn-soft btn-small">Desmarcar lista</button>
+      </section>
+      <div class="info-banner" style="margin-top:20px"><strong>Recuerda:</strong> si algo no queda claro, evita entregar dinero o datos personales hasta verificar la información por medios independientes.</div>
+    </div></section>
+  </div>
+</main>
+<footer class="site-footer"><div class="container footer-inner"><div><a class="logo" href="#inicio">MONEA</a><p class="footer-copy">Entiende tu dinero, decide mejor. Educación financiera básica, clara y sin juicios. Esta versión funciona directamente en tu navegador.</p></div><nav aria-label="Enlaces del pie de página" class="footer-nav"><a href="#inicio">Inicio</a><a href="#mi-dinero">Mi dinero</a><a href="#aprende">Aprende</a><a href="#protege">Protégete</a></nav></div></footer>
+<div id="notice" role="status" aria-live="polite" hidden></div>
+<script>
+(() => {
+  'use strict';
+  const $ = (id) => document.getElementById(id);
+  const STORAGE_KEY = 'monea-autonomo-v1';
+  const allowedTypes = ['income','fixed','variable','debt'];
+  const typeNames = {income:'Ingreso', fixed:'Gasto fijo', variable:'Gasto variable', debt:'Pago de deuda'};
+  const money = new Intl.NumberFormat('es-MX',{style:'currency',currency:'MXN',minimumFractionDigits:2,maximumFractionDigits:2});
+  const currency = cents => money.format(cents/100);
+  const isoDate = date => [date.getFullYear(), String(date.getMonth()+1).padStart(2,'0'), String(date.getDate()).padStart(2,'0')].join('-');
+  const fromIso = str => {const [y,m,d]=str.split('-').map(Number); return new Date(y,m-1,d)};
+  const today = () => isoDate(new Date());
+  const formatDate = str => new Intl.DateTimeFormat('es-MX',{day:'numeric',month:'short',year:'numeric'}).format(fromIso(str));
+  const validIso = value => typeof value==='string' && /^\d{4}-(0[1-9]|1[0-2])-([0-2]\d|3[01])$/.test(value) && Number.isFinite(fromIso(value).getTime()) && isoDate(fromIso(value))===value && Number(value.slice(0,4))>=1900 && Number(value.slice(0,4))<=2200;
+  const validCents = cents => Number.isSafeInteger(cents) && cents>0 && cents<=99999999999;
+  const validGoalCents = cents => Number.isSafeInteger(cents) && cents>=0 && cents<=99999999999;
+  function parseAmount(text,allowZero=false){
+    const value=String(text).trim().replace(',','.');
+    if(!/^\d{1,9}(?:\.\d{1,2})?$/.test(value)) return null;
+    const [whole,decimal='']=value.split('.');
+    const cents=Number(whole)*100+Number(decimal.padEnd(2,'0'));
+    return (allowZero?validGoalCents(cents):validCents(cents))?cents:null;
+  }
+  const initialState = () => ({version:1,periodType:'monthly',records:[],goals:{}});
+  let state=initialState(); let selectedDate=today(); let editingId=null; let lessonIndex=0; let noticeTimer=0;
+  let storageAvailable=true;
+  function normalize(candidate){
+    if(!candidate || candidate.version!==1 || !Array.isArray(candidate.records) || candidate.records.length>15000 || !candidate.goals || typeof candidate.goals!=='object' || Array.isArray(candidate.goals)) throw new Error('Formato de respaldo no compatible.');
+    const records=[]; const ids=new Set();
+    for(const r of candidate.records){
+      if(!r || typeof r.id!=='string' || r.id.length>90 || ids.has(r.id) || !allowedTypes.includes(r.type) || !validCents(r.cents) || !validIso(r.date) || typeof r.description!=='string' || r.description.length>90) throw new Error('El respaldo contiene un movimiento no válido.');
+      ids.add(r.id); records.push({id:r.id,type:r.type,cents:r.cents,date:r.date,description:r.description});
+    }
+    const goals={};
+    const entries=Object.entries(candidate.goals);
+    if(entries.length>10000) throw new Error('Hay demasiadas metas en el respaldo.');
+    for(const [key,cents] of entries){if(/^(weekly|fortnight|monthly):\d{4}-\d{2}-\d{2}$/.test(key) && validGoalCents(cents) && validIso(key.split(':')[1])) goals[key]=cents;else throw new Error('El respaldo contiene una meta no válida.');}
+    return {version:1, periodType:['weekly','fortnight','monthly'].includes(candidate.periodType)?candidate.periodType:'monthly',records,goals};
+  }
+  try{const saved=localStorage.getItem(STORAGE_KEY);if(saved) state=normalize(JSON.parse(saved));}catch(err){storageAvailable=false; console.warn('No se pudo leer MONEA:',err);}
+  function persist(){
+    try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));storageAvailable=true;return true;}
+    catch(e){storageAvailable=false;toast('No fue posible guardar en este navegador. Descarga un respaldo JSON para conservar los datos.',true);return false;}
+  }
+  function toast(message,isError=false){const n=$('notice');n.textContent=message;n.classList.toggle('error',isError);n.hidden=false;clearTimeout(noticeTimer);noticeTimer=setTimeout(()=>{n.hidden=true},5200)}
+  function setRoute(){
+    const route=(location.hash.slice(1).split('?')[0]||'inicio');const name=['inicio','mi-dinero','aprende','protege'].includes(route)?route:'inicio';
+    document.querySelectorAll('.route').forEach(el=>{el.hidden=(el.dataset.route!==name)});
+    document.querySelectorAll('[data-nav]').forEach(a=>{if(a.dataset.nav===name)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+    $('siteNav').classList.remove('open');$('menuButton').setAttribute('aria-expanded','false');
+    const titles={inicio:'Inicio','mi-dinero':'Mi dinero',aprende:'Aprende',protege:'Protege tu dinero'};
+    document.title=titles[name]+' — MONEA';
+    if(name==='mi-dinero')renderMoney();
+    window.scrollTo({top:0,behavior:'instant'});
+    $('main').focus({preventScroll:true});
+  }
+  $('menuButton').addEventListener('click',()=>{const open=$('siteNav').classList.toggle('open');$('menuButton').setAttribute('aria-expanded',String(open))});
+  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&$('siteNav').classList.contains('open')){$('siteNav').classList.remove('open');$('menuButton').setAttribute('aria-expanded','false');$('menuButton').focus()}});
+  window.addEventListener('hashchange',setRoute);
+  function getPeriod(type,anchor){
+    const d=fromIso(anchor); let start,end;
+    if(type==='weekly'){start=new Date(d.getFullYear(),d.getMonth(),d.getDate()-((d.getDay()+6)%7));end=new Date(start.getFullYear(),start.getMonth(),start.getDate()+6)}
+    else if(type==='fortnight'){const second=d.getDate()>15;start=new Date(d.getFullYear(),d.getMonth(),second?16:1);end=second?new Date(d.getFullYear(),d.getMonth()+1,0):new Date(d.getFullYear(),d.getMonth(),15)}
+    else{start=new Date(d.getFullYear(),d.getMonth(),1);end=new Date(d.getFullYear(),d.getMonth()+1,0)}
+    return {start:isoDate(start),end:isoDate(end)};
+  }
+  function periodKey(){return `${state.periodType}:${getPeriod(state.periodType,selectedDate).start}`}
+  function shiftPeriod(direction){
+    const period=getPeriod(state.periodType,selectedDate);const first=fromIso(period.start);
+    let d;
+    if(state.periodType==='weekly') d=new Date(first.getFullYear(),first.getMonth(),first.getDate()+direction*7);
+    else if(state.periodType==='monthly')d=new Date(first.getFullYear(),first.getMonth()+direction,1);
+    else if(direction>0)d=new Date(first.getFullYear(),first.getMonth(),first.getDate()===1?16:32);
+    else d=new Date(first.getFullYear(),first.getMonth(),first.getDate()===1?0:1);
+    selectedDate=isoDate(d);renderMoney();
+  }
+  function getVisibleRecords(){const {start,end}=getPeriod(state.periodType,selectedDate);return state.records.filter(r=>r.date>=start&&r.date<=end).sort((a,b)=>b.date.localeCompare(a.date)||b.id.localeCompare(a.id))}
+  function getTotals(records){const x={income:0,fixed:0,variable:0,debt:0};for(const r of records)x[r.type]+=r.cents;return x}
+  function renderMoney(){
+    $('periodType').value=state.periodType;
+    const period=getPeriod(state.periodType,selectedDate);
+    const short=d=>new Intl.DateTimeFormat('es-MX',{day:'numeric',month:'short',year:'numeric'}).format(fromIso(d));
+    $('periodLabel').textContent=short(period.start)+' – '+short(period.end);
+    const rec=getVisibleRecords(),total=getTotals(rec);
+    const out=total.fixed+total.variable+total.debt, available=total.income-out;
+    $('totalIncome').textContent=currency(total.income);$('totalExpense').textContent=currency(out);$('totalAvailable').textContent=currency(available);
+    $('totalAvailable').style.color=available<0?'#96372c':'';
+    for(const type of ['fixed','variable','debt']){
+      const id=type[0].toUpperCase()+type.slice(1); $('sum'+id).textContent=currency(total[type]);
+      const percent=out>0?Math.round(total[type]/out*100):0;
+      $('bar'+id).style.width=percent+'%';$('track'+id).setAttribute('aria-label',`${typeNames[type]}: ${currency(total[type])}, ${percent}% de las salidas`);
+    }
+    $('breakdownHint').textContent=out>0?'Las barras muestran la proporción de cada tipo de salida.':'Las barras se actualizarán al registrar salidas.';
+    $('recordsEmpty').hidden=rec.length>0;
+    $('recordsCount').textContent=`${rec.length} ${rec.length===1?'movimiento':'movimientos'}`;
+    const list=$('recordList');list.replaceChildren();
+    for(const r of rec){
+      const li=document.createElement('li');li.className='record';
+      const info=document.createElement('div');info.className='record-info';
+      const title=document.createElement('div');title.className='record-title';title.textContent=r.description||typeNames[r.type];
+      const meta=document.createElement('div');meta.className='record-meta';meta.textContent=`${typeNames[r.type]} · ${formatDate(r.date)}`;info.append(title,meta);
+      const right=document.createElement('div');right.className='record-right';
+      const amount=document.createElement('strong');amount.className='record-amount'+(r.type==='income'?' income':'');amount.textContent=(r.type==='income'?'+':'−')+currency(r.cents);
+      const edit=document.createElement('button');edit.type='button';edit.className='text-btn';edit.textContent='Editar';edit.setAttribute('aria-label','Editar '+(r.description||typeNames[r.type]));edit.addEventListener('click',()=>editRecord(r.id));
+      const del=document.createElement('button');del.type='button';del.className='text-btn delete';del.textContent='Eliminar';del.setAttribute('aria-label','Eliminar '+(r.description||typeNames[r.type]));del.addEventListener('click',()=>deleteRecord(r.id));
+      right.append(amount,edit,del);li.append(info,right);list.append(li);
+    }
+    renderSavings(available);
+  }
+  function formError(message){$('formError').textContent=message;$('formError').hidden=!message}
+  function resetForm(){editingId=null;$('movementForm').reset();$('movementDate').value=today();$('submitMovement').textContent='Guardar movimiento';$('cancelEdit').hidden=true;formError('')}
+  $('movementForm').addEventListener('submit',event=>{
+    event.preventDefault();formError('');
+    const type=$('movementType').value, cents=parseAmount($('movementAmount').value), date=$('movementDate').value,description=$('movementDescription').value.trim();
+    if(!allowedTypes.includes(type)){formError('Selecciona un tipo de movimiento válido.');$('movementType').focus();return}
+    if(cents===null){formError('Escribe un monto mayor que cero, con máximo dos decimales.');$('movementAmount').focus();return}
+    if(!validIso(date)){formError('Selecciona una fecha válida.');$('movementDate').focus();return}
+    if(description.length>90){formError('El concepto debe tener máximo 90 caracteres.');$('movementDescription').focus();return}
+    if(editingId){const index=state.records.findIndex(r=>r.id===editingId);if(index<0){resetForm();toast('No se encontró el movimiento.',true);return}state.records[index]={id:editingId,type,cents,date,description}}
+    else{const id=(typeof crypto!=='undefined'&&crypto.randomUUID)?crypto.randomUUID():String(Date.now())+'-'+Math.random().toString(36).slice(2);state.records.push({id,type,cents,date,description})}
+    const wasEditing=!!editingId;selectedDate=date;resetForm();persist();renderMoney();toast(wasEditing?'Movimiento actualizado.':'Movimiento guardado.');
+  });
+  function editRecord(id){const r=state.records.find(x=>x.id===id);if(!r)return;editingId=id;$('movementType').value=r.type;$('movementAmount').value=(r.cents/100).toFixed(2);$('movementDate').value=r.date;$('movementDescription').value=r.description;$('submitMovement').textContent='Guardar cambios';$('cancelEdit').hidden=false;formError('');$('movementAmount').focus();$('movementForm').scrollIntoView({block:'center',behavior:'smooth'})}
+  function deleteRecord(id){const r=state.records.find(x=>x.id===id);if(!r)return;if(!confirm(`¿Eliminar el movimiento de ${currency(r.cents)}?`))return;state.records=state.records.filter(x=>x.id!==id);if(editingId===id)resetForm();persist();renderMoney();toast('Movimiento eliminado.')}
+  $('cancelEdit').addEventListener('click',resetForm);
+  $('periodType').addEventListener('change',()=>{state.periodType=$('periodType').value;persist();renderMoney()});
+  $('periodPrev').addEventListener('click',()=>shiftPeriod(-1));$('periodNext').addEventListener('click',()=>shiftPeriod(1));$('periodToday').addEventListener('click',()=>{selectedDate=today();renderMoney()});
+  function savingsError(message){$('savingsError').hidden=!message;$('savingsError').textContent=message}
+  function renderSavings(available){
+    const key=periodKey(),goal=state.goals[key]||0;
+    $('savingsAmount').value=goal?(goal/100).toFixed(2):'';
+    $('savingResult').textContent=currency(goal);
+    $('remainingResult').textContent='Disponible después de la meta: '+currency(available-goal);
+    $('remainingResult').style.color=(available-goal)<0?'#96372c':'';
+    $('savingAdvice').textContent=goal>Math.max(0,available)?`La meta guardada supera lo disponible en este periodo. Puedes modificarla según tus ingresos y gastos actuales.`:available>0?`Después de las salidas registradas quedan ${currency(available)}. Puedes elegir ahorrar una parte, todo o nada.`:available===0?'No queda dinero disponible con los movimientos registrados en este periodo. No necesitas fijar una meta de ahorro.':`Las salidas registradas superan los ingresos por ${currency(-available)}. Prioriza los gastos esenciales antes de fijar una meta.`;
+    savingsError('');
+  }
+  $('savingsForm').addEventListener('submit',event=>{
+    event.preventDefault();const cents=parseAmount($('savingsAmount').value||'0',true);
+    if(cents===null){savingsError('Escribe un monto válido, con máximo dos decimales.');return}
+    const total=getTotals(getVisibleRecords()),available=total.income-total.fixed-total.variable-total.debt;
+    if(cents>Math.max(0,available)){savingsError(`La meta no puede superar el dinero disponible (${currency(Math.max(0,available))}).`);return}
+    if(cents===0)delete state.goals[periodKey()];else state.goals[periodKey()]=cents;
+    persist();renderSavings(available);toast('Meta de ahorro guardada.');
+  });
+  function download(filename,contents,mime){const blob=new Blob([contents],{type:mime});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000)}
+  $('exportJson').addEventListener('click',()=>{download('MONEA-respaldo-'+today()+'.json',JSON.stringify({...state,exportedAt:new Date().toISOString()},null,2),'application/json;charset=utf-8');toast('Respaldo descargado.')});
+  function escapeCSV(s){const unsafe=String(s);const safe=/^[=+@\-\t\r]/.test(unsafe)?"'"+unsafe:unsafe;return '"'+safe.replaceAll('"','""')+'"'}
+  $('exportCsv').addEventListener('click',()=>{
+    const lines=[['Fecha','Tipo','Concepto','Entrada (MXN)','Salida (MXN)'].map(escapeCSV).join(',')];
+    for(const r of getVisibleRecords())lines.push([r.date,typeNames[r.type],r.description,r.type==='income'?(r.cents/100).toFixed(2):'',r.type!=='income'?(r.cents/100).toFixed(2):''].map(escapeCSV).join(','));
+    const p=getPeriod(state.periodType,selectedDate);download('MONEA-movimientos-'+p.start+'-'+p.end+'.csv','\uFEFF'+lines.join('\r\n'),'text/csv;charset=utf-8');toast('Movimientos descargados en CSV.');
+  });
+  $('importButton').addEventListener('click',()=>$('importFile').click());
+  $('importFile').addEventListener('change',async()=>{
+    const file=$('importFile').files[0];$('importFile').value='';if(!file)return;
+    if(file.size>5*1024*1024){toast('El respaldo es demasiado grande (máximo 5 MB).',true);return}
+    try{const contents=await file.text();const imported=normalize(JSON.parse(contents));
+      if(!confirm(`¿Reemplazar tus datos actuales con ${imported.records.length} movimientos del respaldo? Esta acción no se puede deshacer.`))return;
+      state=imported;resetForm();selectedDate=today();persist();renderMoney();toast('Respaldo importado correctamente.');
+    }catch(err){toast('No se pudo importar: '+(err instanceof SyntaxError?'el archivo no es JSON válido.':err.message),true)}
+  });
+  $('clearData').addEventListener('click',()=>{if(!confirm('¿Borrar TODOS los movimientos y metas guardados en este navegador? Esta acción no se puede deshacer.'))return;state=initialState();selectedDate=today();resetForm();persist();renderMoney();toast('Se borraron los registros de MONEA de este navegador.')});
+  const lessons=[
+    {title:'Intereses',icon:'%',desc:'Qué significa pagar o recibir intereses.',body:'<p>Los <strong>intereses</strong> son una cantidad adicional relacionada con prestar o utilizar dinero durante un tiempo. Si pides un préstamo, pueden aumentar lo que devolverás. Si ahorras en un producto que ofrece rendimientos, pueden ser dinero que recibes.</p><div class="lesson-example"><strong>Ejemplo</strong><p>Si te prestan $1,000 y al final debes regresar $1,100, la diferencia de $100 corresponde a un costo adicional del préstamo en este ejemplo. Siempre revisa si también hay comisiones.</p></div><p>Antes de aceptar un crédito, pregunta cuánto pagarás en total y en qué fechas.</p>'},
+    {title:'Inflación',icon:'↑',desc:'Por qué los precios cambian con el tiempo.',body:'<p>La <strong>inflación</strong> es el aumento general de los precios de bienes y servicios durante un periodo. Cuando los precios suben, la misma cantidad de dinero puede alcanzar para comprar menos cosas.</p><div class="lesson-example"><strong>Ejemplo</strong><p>Si un producto costaba $20 y después cuesta $22, ahora necesitas $2 más para comprarlo. Es un ejemplo de cambio de precio; la inflación considera muchos productos, no uno solo.</p></div><p>Comparar precios y revisar cómo cambian tus gastos puede ayudarte a planear.</p>'},
+    {title:'Créditos',icon:'$',desc:'Cómo funcionan los préstamos y sus pagos.',body:'<p>Un <strong>crédito</strong> permite usar dinero que tendrás que devolver de acuerdo con ciertas condiciones. Debes considerar el monto prestado, los intereses, las comisiones, los plazos y lo que ocurre si te atrasas.</p><div class="lesson-example"><strong>Ejemplo</strong><p>Si un artículo se paga en varias mensualidades, calcula la suma de todos los pagos y compárala con su precio de contado antes de decidir.</p></div><p>No te fijes solo en que la mensualidad parezca pequeña: revisa el costo total.</p>'},
+    {title:'Tarjetas',icon:'▤',desc:'Diferencia entre débito y crédito.',body:'<p>Una <strong>tarjeta de débito</strong> normalmente usa el dinero disponible en tu cuenta. Una <strong>tarjeta de crédito</strong> usa una línea de crédito que debes pagar conforme a sus condiciones.</p><div class="lesson-example"><strong>Ejemplo</strong><p>Comprar con débito descuenta dinero que ya tienes. Comprar con crédito puede generar una obligación de pago posterior y, según el uso y el contrato, intereses.</p></div><p>Cuida tus datos y revisa tus movimientos para identificar cargos que no reconoces.</p>'},
+    {title:'Ahorro',icon:'○',desc:'Cómo establecer una meta posible.',body:'<p>Ahorrar es <strong>reservar una cantidad de dinero</strong> para una necesidad o meta futura. No existe una cifra igual de adecuada para todas las personas.</p><div class="lesson-example"><strong>Ejemplo</strong><p>Si después de cubrir tus gastos esenciales te sobran $40, puedes decidir reservar una parte. Si un periodo no te alcanza, puedes ajustar la meta sin culpa.</p></div><p>Empieza revisando cuánto entra, cuánto sale y qué gastos necesitas cubrir primero.</p>'},
+    {title:'Presupuesto',icon:'=',desc:'Organiza ingresos, gastos y deudas.',body:'<p>Un <strong>presupuesto</strong> es una forma de comparar el dinero que recibes con el que necesitas gastar. Puede ser semanal, quincenal o mensual, según cómo obtengas tus ingresos.</p><div class="lesson-example"><strong>Ejemplo</strong><p>Si recibes $800, gastas $350 en gastos fijos, $200 en variables y $100 en pagos de deudas, quedan $150 disponibles. Los montos son solo un ejemplo educativo.</p></div><p>Si tus ingresos cambian, actualiza el presupuesto con los montos reales en lugar de suponer que cada periodo será igual.</p>'},
+    {title:'Impuestos básicos',icon:'#',desc:'Qué son y por qué existen.',body:'<p>Los <strong>impuestos</strong> son contribuciones que se destinan al financiamiento de servicios y actividades públicas. Existen distintos tipos y obligaciones según la actividad económica y la legislación aplicable.</p><div class="lesson-example"><strong>Ejemplo</strong><p>El precio de algunos bienes y servicios incluye impuestos. La manera de declararlos o pagarlos depende de tu situación particular.</p></div><p>Para conocer obligaciones concretas en México, consulta información oficial del SAT. Esta lección es introductoria.</p>'},
+    {title:'Derechos del consumidor',icon:'✓',desc:'Qué revisar al contratar o comprar.',body:'<p>Como persona consumidora puedes informarte sobre el precio, las condiciones del producto o servicio y los medios de atención disponibles. En servicios financieros también es importante conocer comisiones, costos y contratos.</p><div class="lesson-example"><strong>Ejemplo</strong><p>Antes de contratar un préstamo, solicita sus condiciones por escrito y conserva los comprobantes. Si algo no coincide con lo ofrecido, esa información puede servirte para aclararlo.</p></div><p>En México, PROFECO orienta sobre consumo y CONDUSEF sobre servicios financieros, de acuerdo con las facultades de cada institución.</p>'}
+  ];
+  const grid=$('lessonGrid');
+  lessons.forEach((l,i)=>{const b=document.createElement('button');b.type='button';b.className='lesson-card';b.setAttribute('aria-label','Abrir lección: '+l.title);
+    const icon=document.createElement('span');icon.className='lesson-icon';icon.setAttribute('aria-hidden','true');icon.textContent=l.icon;
+    const strong=document.createElement('strong');strong.textContent=l.title;
+    const desc=document.createElement('span');desc.className='desc';desc.textContent=l.desc;
+    const action=document.createElement('span');action.className='lesson-action';action.textContent='Ver lección →';b.append(icon,strong,desc,action);b.addEventListener('click',()=>openLesson(i));grid.append(b);
+  });
+  function openLesson(index){lessonIndex=(index+lessons.length)%lessons.length;const l=lessons[lessonIndex];$('lessonCounter').textContent=`Lección ${lessonIndex+1} de ${lessons.length}`;$('lessonTitle').textContent=l.title;$('lessonBody').innerHTML=l.body;$('lessonPrev').disabled=lessonIndex===0;$('lessonNext').disabled=lessonIndex===lessons.length-1;$('lessonDetail').hidden=false;$('lessonDetail').scrollIntoView({block:'start',behavior:'smooth'});$('lessonDetail').focus({preventScroll:true})}
+  $('lessonPrev').addEventListener('click',()=>{if(lessonIndex>0)openLesson(lessonIndex-1)});$('lessonNext').addEventListener('click',()=>{if(lessonIndex<lessons.length-1)openLesson(lessonIndex+1)});
+  const checks=[...document.querySelectorAll('.safety-check')];function renderChecks(){const count=checks.filter(x=>x.checked).length;$('checkProgress').textContent=`${count} de ${checks.length} puntos revisados.${count===checks.length?' Ya revisaste esta lista; confirma siempre por canales oficiales.':''}`}
+  checks.forEach(c=>c.addEventListener('change',renderChecks));$('resetChecks').addEventListener('click',()=>{checks.forEach(c=>c.checked=false);renderChecks()});
+  $('movementDate').value=today();setRoute();renderMoney();
+  if(!storageAvailable)toast('El almacenamiento local no está disponible. Puedes usar MONEA, pero descarga un respaldo para conservar tus datos.',true);
+})();
+</script>
+</body>
+</html>
